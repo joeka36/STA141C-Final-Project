@@ -7,9 +7,14 @@
 # 
 # This analysis will determine the the components that can be use to determine the crime type in Chicago. We hope that through a thorough analysis of the dataset, we will able to cluster the observations into different crime types. By doing so we wish that we can determine important features, such as crime location, which can be use to prevent certain types of crime from happening.
 # 
-# In addition, since we are dealing with categorical features, we would also like to analyze the effectiveness of different clustering algorithm on such a data. Since we were already given the type of crimes within the dataset, we could easily check the accuracy of each clustering algorithm. Although this is an unconventional method, since clustering is supposed to be an unsupervised learning method, it would provide us with best accuracy measurement for this project.
+# In addition, since we are dealing with categorical features, we would also like to analyze the effectiveness of different clustering algorithm on such a data. Since we were already given the type of crimes within the dataset, we could easily check the accuracy of each clustering algorithm. Although this is an unconventional method, since clustering is supposed to be an unsupervised learning method, it would provide us with best accuracy measurement for the different algorithms.
+# 
+# The clustering algorithm that we will take into account are:
+# * KMean
+# * KMode
+# * DBSCAN
 
-# In[1]:
+# In[62]:
 
 import numpy as np
 import pandas as pd
@@ -27,24 +32,24 @@ from kmodes import kprototypes
 get_ipython().magic('matplotlib inline')
 
 
-# In[2]:
+# In[63]:
 
 from plotly.offline import download_plotlyjs,init_notebook_mode,plot,iplot
 
 
-# In[3]:
+# In[64]:
 
 init_notebook_mode(connected=True)
 
 
-# In[4]:
+# In[65]:
 
 cf.go_offline()
 
 
 # Since there are a lot invalid observations in the CSV file from 2001 to 2004, we will omit the data from the analysis. We will conduct an analysis on the crimes from 2005 to 2017, while dropping any duplicate observations, determine by the ID and Case Number, or any observations with missing data.
 
-# In[5]:
+# In[66]:
 
 crimes1 = pd.read_csv('Chicago_Crimes_2005_to_2007.csv',error_bad_lines=False)
 crimes2 = pd.read_csv('Chicago_Crimes_2008_to_2011.csv',error_bad_lines=False)
@@ -58,19 +63,19 @@ crimes.drop_duplicates(subset=['ID', 'Case Number'], inplace=True)
 
 # Most of the features are specific to a given observation, it is highly unlikely for different crimes to happen at the exact same Block, and Location. Furthermore, features such Community Area and Ward are very similar to each other in nature, it is possible to drop many of the features to help ensure that the clustering algorithm will only contain useful features which can be use to accurately group the observations into a cluster.
 
-# In[8]:
+# In[67]:
 
 crimes.head()
 
 
-# In[9]:
+# In[68]:
 
 crimes.info()
 
 
 # There are unnecessary columns which would not be able to use for any relevant visualization nor any clustering algorithm. Remove any columns which may be too specific, or might be too similar to one another.
 
-# In[10]:
+# In[69]:
 
 crimes.drop(['Unnamed: 0', 'Case Number', 'IUCR', 'X Coordinate', 'Y Coordinate',
              'Updated On','FBI Code', 'Beat','Ward', 'Location', 'District', 'Block',
@@ -79,13 +84,13 @@ crimes.drop(['Unnamed: 0', 'Case Number', 'IUCR', 'X Coordinate', 'Y Coordinate'
 
 # Since there is Date column, the Date format should be changed to its corresponding Pandas format
 
-# In[11]:
+# In[70]:
 
 crimes.Date = pd.to_datetime(crimes.Date, format='%m/%d/%Y %I:%M:%S %p')
 crimes.index = pd.DatetimeIndex(crimes.Date)
 
 
-# In[12]:
+# In[71]:
 
 crimes.head()
 
@@ -96,17 +101,17 @@ crimes.head()
 
 # Firstly, just go get an overall understanding of the big picture, we will plot the total amount of crime against the year, just to give up an overall understanding of the trend of hte data.
 
-# In[16]:
+# In[72]:
 
 crime_years = pd.DataFrame(crimes.groupby([crimes.index.year]).size().reset_index(name="count"))
 
 
-# In[17]:
+# In[73]:
 
 crime_years
 
 
-# In[18]:
+# In[74]:
 
 crime_years.iplot(kind="line", x='index', y='count',
                  xTitle='Year', yTitle='Total Crimes',title='Total of Crimes per Year')
@@ -116,18 +121,18 @@ crime_years.iplot(kind="line", x='index', y='count',
 
 # With an understanding of the big picture, we will then move on to see whether any crime is more likely to happen than other. If so, there may be some relationship between such a crime type and some other features, which may be use to efficiently cluster the observations.
 
-# In[22]:
+# In[75]:
 
 crime_types_count = pd.DataFrame(crimes.groupby(["Primary Type"]).size().reset_index(name="count"))
 crime_types_count.sort_values('count', ascending=True, inplace=True)
 
 
-# In[23]:
+# In[76]:
 
 crime_types_count.tail()
 
 
-# In[24]:
+# In[77]:
 
 data = [
     go.Bar(
@@ -166,42 +171,42 @@ iplot(fig, filename='total-crime-types')
 
 # To avoid a huge number of clusters, we will only take the top five crime types into account. Fortunately, there is already an "Other Crimes" category which can be use to group up all the observations which do not fit into the given crime type. By reducing the clusters and the observation, we are hoping that the runtime for the clustering algorithm will also decrease.
 
-# In[25]:
+# In[78]:
 
 topCrimes  = list(crimes['Primary Type'].value_counts()[0:5].index)
 
 
-# In[26]:
+# In[79]:
 
 crimes = crimes[crimes['Primary Type'].isin(topCrimes)]
 crimes.shape
 
 
-# In[27]:
+# In[80]:
 
 crime_location_count = pd.DataFrame(crimes.groupby(["Location Description"]).size().reset_index(name="count"))
 crime_location_count.sort_values('count', ascending=True, inplace=True)
 crime_location_count.shape
 
 
-# In[28]:
+# In[81]:
 
 crime_location_count.tail()
 
 
-# In[29]:
+# In[82]:
 
 crime_location_count.head()
 
 
 # Since there are many features with low counts, we will only take the features with a high number of occurences into account.
 
-# In[30]:
+# In[83]:
 
 crime_location_count.drop(crime_location_count.index[0:82], inplace=True)
 
 
-# In[31]:
+# In[84]:
 
 data = [
     go.Bar(
@@ -240,12 +245,12 @@ iplot(fig, filename='total-crime-location')
 
 # Since we have decided that only the 5 top location description will be taken into account during the analysis, we will need to update the crimes dataset to reflect the change.
 
-# In[32]:
+# In[85]:
 
 topLocations  = list(crimes['Location Description'].value_counts()[0:5].index)
 
 
-# In[33]:
+# In[86]:
 
 crimes = crimes[crimes['Location Description'].isin(topLocations)]
 crimes.shape
@@ -253,7 +258,7 @@ crimes.shape
 
 # We hope that our finding on the location may also be extended to the date. We will plot the total amount of crimes against the day of the week to see if crimes may be more likely to happen at a certain day.
 
-# In[36]:
+# In[87]:
 
 crime_day_count = pd.DataFrame(crimes.groupby([crimes.index.dayofweek]).size().reset_index(name="count"))
 days = ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"]
@@ -261,7 +266,7 @@ crime_day_count['index'] = days
 crime_day_count
 
 
-# In[37]:
+# In[88]:
 
 crime_day_count.iplot(kind="bar", x='index', y='count',
                  xTitle='Day of the Week', yTitle='Total Crimes',title='Total of Crimes per Day')
@@ -271,7 +276,7 @@ crime_day_count.iplot(kind="bar", x='index', y='count',
 
 # Although the plot of the day of the week against the total amount of crime did not show any distribution, we will extend this analysis to the month, in hope that there may be some sort of relation between a crime and when it may happen.
 
-# In[40]:
+# In[89]:
 
 crime_month_count = pd.DataFrame(crimes.groupby([crimes.index.month]).size().reset_index(name="count"))
 months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -279,7 +284,7 @@ crime_month_count['index'] = months
 crime_month_count
 
 
-# In[41]:
+# In[90]:
 
 crime_month_count.iplot(kind="bar", x='index', y='count',
                  xTitle='Month', yTitle='Total Crimes',title='Total of Crimes per Month')
@@ -287,7 +292,7 @@ crime_month_count.iplot(kind="bar", x='index', y='count',
 
 # Unlike the initial plot, the plot of the month against the total amount of crime, to our surprises, shows a Gaussian distribution. With crimes more likely to happen over the summer, and less likely to happen during the the end and the beginning of the year, with the exception of January. We hypothesize that there may be an increase in crime over the summer, and January, as they are travel seasons, which may lead to more crimes being committed against tourists. With additional data, this may lead to an interesting research topic. Since there exist a relationship between the month and crime, we decided that it may be useful to keep this feature for further analysis.
 
-# In[42]:
+# In[91]:
 
 crime_count = pd.DataFrame(crimes.groupby(["Primary Type", crimes.index]).size().reset_index(name="count"))
 crime_count.sort_values('Primary Type', ascending=True, inplace=True)
@@ -344,6 +349,14 @@ X.shape
 
 
 # # Clustering Algorithm
+# 
+# As mentioned before, the clustering algorithms that we will use are:
+# 
+# * KMean
+# * KMode
+# * DBSCAN
+# 
+# Since the dataset are all categorical, we can expect all the algorithm to not perform as accurately as they should. Nevertheless, by comparing the results, we may come up with some interesting find which may determine a specific algorithm which is best for categorical dataset.
 
 # The total amount of clusters can be determined by the unique values left within our reduced dataset.
 

@@ -11753,14 +11753,20 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="STA141C-Final-Project:-Crime-in-Chicago">STA141C Final Project: Crime in Chicago<a class="anchor-link" href="#STA141C-Final-Project:-Crime-in-Chicago">&#182;</a></h1><h3 id="A-clustering-analysis-and-visualization-for-crime-in-Chicago-from-2005-2017">A clustering analysis and visualization for crime in Chicago from 2005-2017<a class="anchor-link" href="#A-clustering-analysis-and-visualization-for-crime-in-Chicago-from-2005-2017">&#182;</a></h3><p>By: Joe Akanesuvan, Navid Al Nadvi, Sailesh Patnala</p>
 <p>This analysis will determine the the components that can be use to determine the crime type in Chicago. We hope that through a thorough analysis of the dataset, we will able to cluster the observations into different crime types. By doing so we wish that we can determine important features, such as crime location, which can be use to prevent certain types of crime from happening.</p>
-<p>In addition, since we are dealing with categorical features, we would also like to analyze the effectiveness of different clustering algorithm on such a data. Since we were already given the type of crimes within the dataset, we could easily check the accuracy of each clustering algorithm. Although this is an unconventional method, since clustering is supposed to be an unsupervised learning method, it would provide us with best accuracy measurement for this project.</p>
+<p>In addition, since we are dealing with categorical features, we would also like to analyze the effectiveness of different clustering algorithm on such a data. Since we were already given the type of crimes within the dataset, we could easily check the accuracy of each clustering algorithm. Although this is an unconventional method, since clustering is supposed to be an unsupervised learning method, it would provide us with best accuracy measurement for the different algorithms.</p>
+<p>The clustering algorithm that we will take into account are:</p>
+<ul>
+<li>KMean</li>
+<li>KMode</li>
+<li>DBSCAN</li>
+</ul>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -11786,7 +11792,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="k">import</span> <span class="n">download_plotlyjs</span><span class="p">,</span><span class="n">init_notebook_mode</span><span class="p">,</span><span class="n">plot</span><span class="p">,</span><span class="n">iplot</span>
@@ -11799,7 +11805,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">init_notebook_mode</span><span class="p">(</span><span class="n">connected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -11827,7 +11833,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">cf</span><span class="o">.</span><span class="n">go_offline</span><span class="p">()</span>
@@ -11939,7 +11945,7 @@ for(var a=0;a<3;++a)n[4*i+a]=t[i][a];n[4*i+3]=t[i][3]*e[i]}return n}function u(t
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crimes1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Chicago_Crimes_2005_to_2007.csv&#39;</span><span class="p">,</span><span class="n">error_bad_lines</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -11991,7 +11997,7 @@ b&#39;Skipping line 1149094: expected 23 fields, saw 41\n&#39;
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crimes</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -12005,7 +12011,7 @@ b&#39;Skipping line 1149094: expected 23 fields, saw 41\n&#39;
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[67]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12171,7 +12177,7 @@ b&#39;Skipping line 1149094: expected 23 fields, saw 41\n&#39;
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crimes</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
@@ -12235,7 +12241,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[69]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crimes</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="s1">&#39;Case Number&#39;</span><span class="p">,</span> <span class="s1">&#39;IUCR&#39;</span><span class="p">,</span> <span class="s1">&#39;X Coordinate&#39;</span><span class="p">,</span> <span class="s1">&#39;Y Coordinate&#39;</span><span class="p">,</span>
@@ -12260,7 +12266,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crimes</span><span class="o">.</span><span class="n">Date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">crimes</span><span class="o">.</span><span class="n">Date</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y %I:%M:%S %p&#39;</span><span class="p">)</span>
@@ -12274,7 +12280,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crimes</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -12288,7 +12294,7 @@ memory usage: 736.1+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[71]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12415,7 +12421,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_years</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">crimes</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">crimes</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">))</span>
@@ -12428,7 +12434,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[73]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_years</span>
@@ -12442,7 +12448,7 @@ memory usage: 736.1+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[73]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12533,7 +12539,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[74]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_years</span><span class="o">.</span><span class="n">iplot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span>
@@ -12551,7 +12557,7 @@ memory usage: 736.1+ MB
 <div class="output_area"><div class="prompt"></div>
 
 <div class="output_html rendered_html output_subarea ">
-<div id="c2943ad2-a86a-4dbb-97cc-844eb7151f57" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("c2943ad2-a86a-4dbb-97cc-844eb7151f57", [{"type": "scatter", "x": [2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017], "y": [453666, 448037, 436924, 426964, 392556, 370140, 351555, 335670, 306703, 274527, 262995, 265462, 11357], "name": "count", "text": "", "line": {"color": "rgba(226, 74, 51, 1.0)", "width": 1.3, "dash": "solid"}, "mode": "lines"}], {"legend": {"bgcolor": "#FFFFFF", "font": {"color": "#666666"}}, "paper_bgcolor": "#FFFFFF", "plot_bgcolor": "#E5E5E5", "yaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Total Crimes"}, "xaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Year"}, "titlefont": {"color": "#151516"}, "title": "Total of Crimes per Year"}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
+<div id="3f8c9c6a-011e-4377-b60e-3a18891d33cd" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("3f8c9c6a-011e-4377-b60e-3a18891d33cd", [{"type": "scatter", "x": [2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017], "y": [453666, 448037, 436924, 426964, 392556, 370140, 351555, 335670, 306703, 274527, 262995, 265462, 11357], "name": "count", "text": "", "line": {"color": "rgba(226, 74, 51, 1.0)", "width": 1.3, "dash": "solid"}, "mode": "lines"}], {"legend": {"bgcolor": "#FFFFFF", "font": {"color": "#666666"}}, "paper_bgcolor": "#FFFFFF", "plot_bgcolor": "#E5E5E5", "yaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Total Crimes"}, "xaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Year"}, "titlefont": {"color": "#151516"}, "title": "Total of Crimes per Year"}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
 </div>
 
 </div>
@@ -12582,7 +12588,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_types_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">crimes</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;Primary Type&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">))</span>
@@ -12596,7 +12602,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[76]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_types_count</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
@@ -12610,7 +12616,7 @@ memory usage: 736.1+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[76]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12661,7 +12667,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[77]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
@@ -12708,7 +12714,7 @@ memory usage: 736.1+ MB
 <div class="output_area"><div class="prompt"></div>
 
 <div class="output_html rendered_html output_subarea ">
-<div id="01d94b50-2fa9-4c54-becc-790749d44d33" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("01d94b50-2fa9-4c54-becc-790749d44d33", [{"type": "bar", "x": [4, 10, 28, 38, 90, 90, 95, 109, 341, 2146, 2311, 3388, 5875, 6632, 8276, 9920, 11242, 14672, 17073, 29857, 35028, 40868, 44333, 122992, 165715, 170231, 196804, 260868, 264109, 264200, 473790, 499426, 778164, 907831], "y": ["NON-CRIMINAL (SUBJECT SPECIFIED)", "RITUALISM", "HUMAN TRAFFICKING", "NON - CRIMINAL", "CONCEALED CARRY LICENSE VIOLATION", "OTHER NARCOTIC VIOLATION", "NON-CRIMINAL", "PUBLIC INDECENCY", "OBSCENITY", "STALKING", "INTIMIDATION", "KIDNAPPING", "HOMICIDE", "ARSON", "LIQUOR LAW VIOLATION", "GAMBLING", "INTERFERENCE WITH PUBLIC OFFICER", "SEX OFFENSE", "CRIM SEXUAL ASSAULT", "OFFENSE INVOLVING CHILDREN", "PUBLIC PEACE VIOLATION", "PROSTITUTION", "WEAPONS VIOLATION", "CRIMINAL TRESPASS", "ROBBERY", "DECEPTIVE PRACTICE", "MOTOR VEHICLE THEFT", "ASSAULT", "BURGLARY", "OTHER OFFENSE", "NARCOTICS", "CRIMINAL DAMAGE", "BATTERY", "THEFT"], "orientation": "h"}], {"title": "Total Crime Types", "yaxis": {"title": "Crime Types", "tickfont": {"size": 8, "color": "black"}}, "xaxis": {"title": "Count"}, "margin": {"l": 200, "r": 50, "b": 100, "t": 100, "pad": 4}}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
+<div id="0b938db9-42c3-48a9-b79a-b90544cd36aa" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("0b938db9-42c3-48a9-b79a-b90544cd36aa", [{"type": "bar", "x": [4, 10, 28, 38, 90, 90, 95, 109, 341, 2146, 2311, 3388, 5875, 6632, 8276, 9920, 11242, 14672, 17073, 29857, 35028, 40868, 44333, 122992, 165715, 170231, 196804, 260868, 264109, 264200, 473790, 499426, 778164, 907831], "y": ["NON-CRIMINAL (SUBJECT SPECIFIED)", "RITUALISM", "HUMAN TRAFFICKING", "NON - CRIMINAL", "CONCEALED CARRY LICENSE VIOLATION", "OTHER NARCOTIC VIOLATION", "NON-CRIMINAL", "PUBLIC INDECENCY", "OBSCENITY", "STALKING", "INTIMIDATION", "KIDNAPPING", "HOMICIDE", "ARSON", "LIQUOR LAW VIOLATION", "GAMBLING", "INTERFERENCE WITH PUBLIC OFFICER", "SEX OFFENSE", "CRIM SEXUAL ASSAULT", "OFFENSE INVOLVING CHILDREN", "PUBLIC PEACE VIOLATION", "PROSTITUTION", "WEAPONS VIOLATION", "CRIMINAL TRESPASS", "ROBBERY", "DECEPTIVE PRACTICE", "MOTOR VEHICLE THEFT", "ASSAULT", "BURGLARY", "OTHER OFFENSE", "NARCOTICS", "CRIMINAL DAMAGE", "BATTERY", "THEFT"], "orientation": "h"}], {"title": "Total Crime Types", "yaxis": {"title": "Crime Types", "tickfont": {"size": 8, "color": "black"}}, "xaxis": {"title": "Count"}, "margin": {"l": 200, "r": 50, "b": 100, "t": 100, "pad": 4}}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
 </div>
 
 </div>
@@ -12739,7 +12745,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[78]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">topCrimes</span>  <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">crimes</span><span class="p">[</span><span class="s1">&#39;Primary Type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -12752,7 +12758,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[79]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crimes</span> <span class="o">=</span> <span class="n">crimes</span><span class="p">[</span><span class="n">crimes</span><span class="p">[</span><span class="s1">&#39;Primary Type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">topCrimes</span><span class="p">)]</span>
@@ -12767,7 +12773,7 @@ memory usage: 736.1+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[26]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[79]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12782,7 +12788,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[80]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_location_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">crimes</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;Location Description&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">))</span>
@@ -12798,7 +12804,7 @@ memory usage: 736.1+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[27]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[80]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12813,7 +12819,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[81]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_location_count</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
@@ -12827,7 +12833,7 @@ memory usage: 736.1+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[28]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[81]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12878,7 +12884,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[82]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_location_count</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -12892,7 +12898,7 @@ memory usage: 736.1+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[82]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12953,7 +12959,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_location_count</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">crime_location_count</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">82</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -12966,7 +12972,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[84]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
@@ -13013,7 +13019,7 @@ memory usage: 736.1+ MB
 <div class="output_area"><div class="prompt"></div>
 
 <div class="output_html rendered_html output_subarea ">
-<div id="32a450be-2e05-4e59-8814-09697a0de8d4" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("32a450be-2e05-4e59-8814-09697a0de8d4", [{"type": "bar", "x": [19980, 24403, 24926, 37178, 37946, 40269, 41601, 46557, 47944, 53899, 62808, 66879, 67364, 87402, 103841, 325566, 341564, 476329, 735763], "y": ["BAR OR TAVERN", "GAS STATION", "PARK PROPERTY", "RESIDENCE-GARAGE", "GROCERY FOOD STORE", "RESTAURANT", "RESIDENTIAL YARD (FRONT/BACK)", "DEPARTMENT STORE", "RESIDENCE PORCH/HALLWAY", "SMALL RETAIL STORE", "SCHOOL, PUBLIC, BUILDING", "ALLEY", "VEHICLE NON-COMMERCIAL", "PARKING LOT/GARAGE(NON.RESID.)", "OTHER", "APARTMENT", "SIDEWALK", "RESIDENCE", "STREET"], "orientation": "h"}], {"title": "Total Crimes by Location", "yaxis": {"title": "Location Description", "tickfont": {"size": 8, "color": "black"}}, "xaxis": {"title": "Count"}, "margin": {"l": 200, "r": 50, "b": 100, "t": 100, "pad": 4}}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
+<div id="921a97fc-edca-4028-93af-dd43aa88e09d" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("921a97fc-edca-4028-93af-dd43aa88e09d", [{"type": "bar", "x": [19980, 24403, 24926, 37178, 37946, 40269, 41601, 46557, 47944, 53899, 62808, 66879, 67364, 87402, 103841, 325566, 341564, 476329, 735763], "y": ["BAR OR TAVERN", "GAS STATION", "PARK PROPERTY", "RESIDENCE-GARAGE", "GROCERY FOOD STORE", "RESTAURANT", "RESIDENTIAL YARD (FRONT/BACK)", "DEPARTMENT STORE", "RESIDENCE PORCH/HALLWAY", "SMALL RETAIL STORE", "SCHOOL, PUBLIC, BUILDING", "ALLEY", "VEHICLE NON-COMMERCIAL", "PARKING LOT/GARAGE(NON.RESID.)", "OTHER", "APARTMENT", "SIDEWALK", "RESIDENCE", "STREET"], "orientation": "h"}], {"title": "Total Crimes by Location", "yaxis": {"title": "Location Description", "tickfont": {"size": 8, "color": "black"}}, "xaxis": {"title": "Count"}, "margin": {"l": 200, "r": 50, "b": 100, "t": 100, "pad": 4}}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
 </div>
 
 </div>
@@ -13044,7 +13050,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">topLocations</span>  <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">crimes</span><span class="p">[</span><span class="s1">&#39;Location Description&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -13057,7 +13063,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[86]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crimes</span> <span class="o">=</span> <span class="n">crimes</span><span class="p">[</span><span class="n">crimes</span><span class="p">[</span><span class="s1">&#39;Location Description&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">topLocations</span><span class="p">)]</span>
@@ -13072,7 +13078,7 @@ memory usage: 736.1+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[33]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[86]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -13097,7 +13103,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_day_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">crimes</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">crimes</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">))</span>
@@ -13114,7 +13120,7 @@ memory usage: 736.1+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[36]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[87]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -13175,7 +13181,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[88]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_day_count</span><span class="o">.</span><span class="n">iplot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span>
@@ -13193,7 +13199,7 @@ memory usage: 736.1+ MB
 <div class="output_area"><div class="prompt"></div>
 
 <div class="output_html rendered_html output_subarea ">
-<div id="81a835f9-71dc-457e-a011-e49a8662941d" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("81a835f9-71dc-457e-a011-e49a8662941d", [{"type": "bar", "x": ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"], "y": [274792, 275587, 275631, 273853, 290101, 299817, 293282], "name": "count", "text": "", "marker": {"color": "rgba(226, 74, 51, 0.6)", "line": {"color": "rgba(226, 74, 51, 1.0)", "width": 1}}, "orientation": "v"}], {"legend": {"bgcolor": "#FFFFFF", "font": {"color": "#666666"}}, "paper_bgcolor": "#FFFFFF", "plot_bgcolor": "#E5E5E5", "yaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Total Crimes"}, "xaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Day of the Week"}, "titlefont": {"color": "#151516"}, "title": "Total of Crimes per Day"}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
+<div id="4a394c56-840b-4a28-93f1-d3e4c54d5735" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("4a394c56-840b-4a28-93f1-d3e4c54d5735", [{"type": "bar", "x": ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"], "y": [274792, 275587, 275631, 273853, 290101, 299817, 293282], "name": "count", "text": "", "marker": {"color": "rgba(226, 74, 51, 0.6)", "line": {"color": "rgba(226, 74, 51, 1.0)", "width": 1}}, "orientation": "v"}], {"legend": {"bgcolor": "#FFFFFF", "font": {"color": "#666666"}}, "paper_bgcolor": "#FFFFFF", "plot_bgcolor": "#E5E5E5", "yaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Total Crimes"}, "xaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Day of the Week"}, "titlefont": {"color": "#151516"}, "title": "Total of Crimes per Day"}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
 </div>
 
 </div>
@@ -13224,7 +13230,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[89]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_month_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">crimes</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">crimes</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">month</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">))</span>
@@ -13241,7 +13247,7 @@ memory usage: 736.1+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[40]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[89]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -13327,7 +13333,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[90]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_month_count</span><span class="o">.</span><span class="n">iplot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span>
@@ -13345,7 +13351,7 @@ memory usage: 736.1+ MB
 <div class="output_area"><div class="prompt"></div>
 
 <div class="output_html rendered_html output_subarea ">
-<div id="d72d03d1-0b54-42d6-b4d3-112e0c7be323" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("d72d03d1-0b54-42d6-b4d3-112e0c7be323", [{"type": "bar", "x": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "y": [158484, 135626, 166287, 166737, 176910, 177180, 188090, 184028, 167900, 168975, 153347, 139499], "name": "count", "text": "", "marker": {"color": "rgba(226, 74, 51, 0.6)", "line": {"color": "rgba(226, 74, 51, 1.0)", "width": 1}}, "orientation": "v"}], {"legend": {"bgcolor": "#FFFFFF", "font": {"color": "#666666"}}, "paper_bgcolor": "#FFFFFF", "plot_bgcolor": "#E5E5E5", "yaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Total Crimes"}, "xaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Month"}, "titlefont": {"color": "#151516"}, "title": "Total of Crimes per Month"}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
+<div id="f7d4836d-5ecd-4fdd-a446-8a095cf647f5" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("f7d4836d-5ecd-4fdd-a446-8a095cf647f5", [{"type": "bar", "x": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "y": [158484, 135626, 166287, 166737, 176910, 177180, 188090, 184028, 167900, 168975, 153347, 139499], "name": "count", "text": "", "marker": {"color": "rgba(226, 74, 51, 0.6)", "line": {"color": "rgba(226, 74, 51, 1.0)", "width": 1}}, "orientation": "v"}], {"legend": {"bgcolor": "#FFFFFF", "font": {"color": "#666666"}}, "paper_bgcolor": "#FFFFFF", "plot_bgcolor": "#E5E5E5", "yaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Total Crimes"}, "xaxis1": {"tickfont": {"color": "#666666"}, "gridcolor": "#F6F6F6", "titlefont": {"color": "#666666"}, "zerolinecolor": "#F6F6F6", "showgrid": true, "title": "Month"}, "titlefont": {"color": "#151516"}, "title": "Total of Crimes per Month"}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
 </div>
 
 </div>
@@ -13366,7 +13372,7 @@ memory usage: 736.1+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[91]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">crime_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">crimes</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;Primary Type&quot;</span><span class="p">,</span> <span class="n">crimes</span><span class="o">.</span><span class="n">index</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">))</span>
@@ -13385,7 +13391,7 @@ memory usage: 736.1+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[42]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[91]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -13784,7 +13790,14 @@ memory usage: 736.1+ MB
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Clustering-Algorithm">Clustering Algorithm<a class="anchor-link" href="#Clustering-Algorithm">&#182;</a></h1>
+<h1 id="Clustering-Algorithm">Clustering Algorithm<a class="anchor-link" href="#Clustering-Algorithm">&#182;</a></h1><p>As mentioned before, the clustering algorithms that we will use are:</p>
+<ul>
+<li>KMean</li>
+<li>KMode</li>
+<li>DBSCAN</li>
+</ul>
+<p>Since the dataset are all categorical, we can expect all the algorithm to not perform as accurately as they should. Nevertheless, by comparing the results, we may come up with some interesting find which may determine a specific algorithm which is best for categorical dataset.</p>
+
 </div>
 </div>
 </div>
