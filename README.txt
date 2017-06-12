@@ -1,0 +1,1 @@
+The file contains specific library from https://github.com/nicodv/kmodes which was used to run the KMode algorithm.
